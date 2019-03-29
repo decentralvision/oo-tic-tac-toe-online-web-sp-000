@@ -66,10 +66,10 @@ class TicTacToe
     user_input = gets.strip
     index = input_to_index(user_input)
     if valid_move?(index)
-      move(board, index, current_player(board))
-      display_board(board)
+      move(index, current_player)
+      display_board
     else
-      turn(board)
+      turn
     end
   end
 
@@ -78,11 +78,11 @@ class TicTacToe
   end
 
   def current_player
-    turn_count(board).even? ? 'X' : 'O'
+    turn_count.even? ? 'X' : 'O'
   end
 
   def turn_count
-    board.count { |token| token == 'X' || token == 'O' }
+    @board.count { |token| token == 'X' || token == 'O' }
   end
 
   def move(index, player = "X")
