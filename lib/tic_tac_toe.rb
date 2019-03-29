@@ -17,10 +17,10 @@ class TicTacToe
   ].freeze
 
   def play
-    turn(@board) until over?(board)
-    if won?(board)
+    turn until over?
+    if won?
       puts "Congratulations #{winner(board)}!"
-    elsif draw?(board)
+    elsif draw?
       puts "Cat's Game!"
     end
   end
@@ -34,27 +34,27 @@ class TicTacToe
   end
 
   def valid_move?(index)
-    index.between?(0, 8) && !position_taken?(board, index)
+    index.between?(0, 8) && !position_taken?(index)
   end
 
   def won?
     WIN_COMBINATIONS.detect do |combo|
-      board[combo[0]] == board[combo[1]] &&
-        board[combo[1]] == board[combo[2]] &&
-        position_taken?(board, combo[0])
+      @board[combo[0]] == @board[combo[1]] &&
+        @board[combo[1]] == @board[combo[2]] &&
+        position_taken?(combo[0])
     end
   end
 
   def full?
-    board.all? { |token| token == 'X' || token == 'O' }
+    @board.all? { |token| token == 'X' || token == 'O' }
   end
 
   def draw?
-    !won?(board) && full?(board)
+    !won? && full?
   end
 
   def over?
-    won?(board) || draw?(board)
+    won? || draw?
   end
 
   def input_to_index(user_input)
@@ -65,7 +65,7 @@ class TicTacToe
     puts 'Please enter 1-9:'
     user_input = gets.strip
     index = input_to_index(user_input)
-    if valid_move?(board, index)
+    if valid_move?(index)
       move(board, index, current_player(board))
       display_board(board)
     else
